@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Product;
+use App\Models\Receive;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 class ProductController extends Controller
@@ -15,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with(['receives'])->withSum('receives','quantity')->get();
+
         return Inertia::render('Product/Products',['products'=>$products]);
     }
 
@@ -32,8 +35,8 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param ProductStoreRequest $request
+     * @return RedirectResponse
      */
     public function store(ProductStoreRequest $request)
     {
@@ -45,11 +48,12 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show(Product $product)
     {
-        //
+        $receives = Receive::with(['supplier'])->where(['product_id'=>$product->id])->get();
+        return Inertia::render('Product/ProductDetails',['receives'=>$receives,'product'=>$product]);
     }
 
     /**

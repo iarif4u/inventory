@@ -21,8 +21,14 @@
                                     Dashboard
                                 </jet-nav-link>
 
-                                <jet-nav-link :href="route('products')" :active="route().current('products')">
+                                <jet-nav-link :href="route('products.index')" :active="route().current('products.index')">
                                     Products
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('suppliers.index')" :active="route().current('suppliers.index')">
+                                    Suppliers
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('receives.create')" :active="route().current('receives.create')">
+                                    New Receive
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -148,8 +154,11 @@
                             Dashboard
                         </jet-responsive-nav-link>
 
-                        <jet-responsive-nav-link :href="route('products')" :active="route().current('products')">
+                        <jet-responsive-nav-link :href="route('products.index')" :active="route().current('products.index')">
                             Products
+                        </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('suppliers.index')" :active="route().current('suppliers.index')">
+                            Suppliers
                         </jet-responsive-nav-link>
                     </div>
 

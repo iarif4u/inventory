@@ -3,10 +3,10 @@
         <template #header>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">Products</h2>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">Suppliers</h2>
                 </div>
                 <div>
-                    <inertia-link class="float-right" :href="route('products.create')">Add Product</inertia-link>
+                    <inertia-link class="float-right" :href="route('suppliers.create')">Add Supplier</inertia-link>
                 </div>
             </div>
         </template>
@@ -14,8 +14,8 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="shadow-xl sm:rounded-lg">
-                    <div v-for="(product,index) in products" v-bind:key="index">
-                        <Product v-bind:index="index" v-bind:product="product"/>
+                    <div v-for="(supplier,index) in suppliers" v-bind:key="index">
+                        <Supplier v-bind:index="index" v-bind:supplier="supplier"/>
                     </div>
                 </div>
             </div>
@@ -25,15 +25,15 @@
 
 <script>
 import AppLayout from '@/Layouts/AppLayout'
-import Product from '@/Pages/Product/Product'
+import Supplier from '@/Pages/Supplier/Supplier'
 
 export default {
     components: {
         AppLayout,
-        Product
+        Supplier
     },
     props: {
-        products: {type: Array, required: true}
+        suppliers: {type: Array, required: true}
     }
 }
 </script>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReceiveController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +31,13 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/products',[ProductController::class,'index'])->name('products');
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::resource('products', ProductController::class);
+    Route::resource('suppliers', SupplierController::class);
+    Route::resource('receives', ReceiveController::class);
+});
+
+
+/*Route::middleware(['auth:sanctum', 'verified'])->get('/products',[ProductController::class,'index'])->name('products');
 Route::middleware(['auth:sanctum', 'verified'])->get('/product/create',[ProductController::class,'create'])->name('product.create');
-Route::middleware(['auth:sanctum', 'verified'])->post('/product/store',[ProductController::class,'store'])->name('product.store');
+Route::middleware(['auth:sanctum', 'verified'])->post('/product/store',[ProductController::class,'store'])->name('product.store');*/

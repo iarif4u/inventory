@@ -10,4 +10,8 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = ["name", "description"];
+
+    public function receives(){
+        return $this->hasMany(Receive::class);
+    }
 }

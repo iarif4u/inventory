@@ -3,14 +3,13 @@
         <template #header>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">Products</h2>
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">New Supplier</h2>
                 </div>
                 <div>
-                    <inertia-link class="float-right" :href="route('products.index')">Product List</inertia-link>
+                    <inertia-link class="float-right" :href="route('suppliers.index')">Supplier List</inertia-link>
                 </div>
             </div>
         </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white px-3 py-4 overflow-hidden shadow-xl sm:rounded-lg">
@@ -20,13 +19,15 @@
                         <div class="py-2">
                             <jet-label for="name" value="Name" />
                             <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus />
-
                         </div>
                         <div class="py-2">
-                            <jet-label for="description" value="Description" />
-                            <jet-input id="description" type="text" class="mt-1 block w-full" v-model="form.description" required />
+                            <jet-label for="phone" value="Phone" />
+                            <jet-input id="phone" type="text" class="mt-1 block w-full" v-model="form.phone" required />
                         </div>
-
+                        <div class="py-2">
+                            <jet-label for="address" value="Address" />
+                            <jet-input id="address" type="text" class="mt-1 block w-full" v-model="form.address" required />
+                        </div>
                         <div class="flex items-center mt-4">
                             <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                                 Submit
@@ -66,13 +67,14 @@ export default {
         return {
             form: this.$inertia.form({
                 name: null,
-                description: null,
+                phone: null,
+                address: null,
             })
         }
     },
     methods: {
         submit() {
-            this.form.post(this.route('products.store'), {
+            this.form.post(this.route('suppliers.store'), {
                 preserveScroll: true,
                 onSuccess: (response) => {
                     this.form.reset();
