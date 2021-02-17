@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SupplierStoreRequest;
+use App\Models\Receive;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -47,11 +48,12 @@ class SupplierController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Supplier $supplier
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Supplier $supplier)
     {
-        //
+        $receives = Receive::with(['product'])->where(['supplier_id'=>$supplier->id])->latest()->get();
+        return Inertia::render('Supplier/SupplierDetails',['receives'=>$receives,'supplier'=>$supplier]);
     }
 
     /**

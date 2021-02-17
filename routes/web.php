@@ -3,7 +3,10 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReceiveController;
 use App\Http\Controllers\SupplierController;
-use Illuminate\Foundation\Application;
+use App\Models\Product;
+use App\Models\Supplier;
+use App\Models\Receive;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,26 +21,17 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::middleware(['guest'])->get('/', [AuthenticatedSessionController::class, 'create']);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/dashboard', function () {
+        $total_product = Product::count();
+        $total_supplier = Supplier::count();
+        $stock = Receive::sum('quantity');
+        return Inertia::render('Dashboard',['stock'=>$stock,'total_product'=>$total_product,'total_supplier'=>$total_supplier]);
+    })->name('dashboard');
+
     Route::resource('products', ProductController::class);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('receives', ReceiveController::class);
 });
-
-
-/*Route::middleware(['auth:sanctum', 'verified'])->get('/products',[ProductController::class,'index'])->name('products');
-Route::middleware(['auth:sanctum', 'verified'])->get('/product/create',[ProductController::class,'create'])->name('product.create');
-Route::middleware(['auth:sanctum', 'verified'])->post('/product/store',[ProductController::class,'store'])->name('product.store');*/

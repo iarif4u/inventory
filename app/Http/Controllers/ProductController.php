@@ -52,7 +52,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $receives = Receive::with(['supplier'])->where(['product_id'=>$product->id])->get();
+        $receives = Receive::with(['supplier'])->where(['product_id'=>$product->id])->latest()->get();
         return Inertia::render('Product/ProductDetails',['receives'=>$receives,'product'=>$product]);
     }
 
